@@ -180,7 +180,7 @@ def main():
     #filter connection
     filtered_df = filter_data(df, car_brand, car_condition, car_transmission)
 
-    st.title('Automobile Price Analysis in the Nigerian Dashboard')
+    st.title('Automobiles Price Analysis Nigerian Dashboard')
     st.markdown('---')
 
     #call filter
