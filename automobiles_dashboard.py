@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 #Page Configuration
 
 st.set_page_config(
-    page_title="Automobiles Price Analysis in Nigerian Dashboard",
+    page_title="Nigerian Automobiles Price Analysis Dashboard",
     page_icon="🚗",
     layout="wide"
 )
@@ -57,7 +57,13 @@ def display_kpi(filtered_df):
 
     with col2:
         average_cars = filtered_df['Price'].mean() if len(filtered_df) > 0 else 0
-        st.metric('🚌 Average Car Price', f'${average_cars:,.2f}')
+        if average_cars >= 1_000_000:
+            formatted_average = f"₦{int(average_cars / 1_000_000)} M"
+        elif average_cars >= 1_000:
+            formatted_average = f"₦{int(average_cars / 1_000)} K"
+        else:
+            formatted_average = f"₦{int(average_cars)}"
+        st.metric('🚌 Average Car Price', formatted_average)
 
     with col3:
         common_cars = filtered_df['Make'].mode()[0] if len(filtered_df) > 0 else 0
@@ -109,7 +115,7 @@ def charts(filtered_df):
            x='Condition',
            y='Price'
            )
-           st.plotly_chart(fig3, use_container_width=True)
+           st.plotly_chart(fig3, width='stretch')
 
     with col4:
         st.subheader('Distribution of Year')
@@ -144,7 +150,7 @@ def charts(filtered_df):
             xaxis_title="Year", 
             yaxis_title="Price"
         )
-        st.plotly_chart(fig5, use_container_width=True)
+        st.plotly_chart(fig5, width='stretch')
 
 
     with col6:
@@ -180,7 +186,7 @@ def main():
     #filter connection
     filtered_df = filter_data(df, car_brand, car_condition, car_transmission)
 
-    st.title('Automobiles Price Analysis Nigerian Dashboard')
+    st.title('Nigerian Automobiles Price Analysis Dashboard')
     st.markdown('---')
 
     #call filter
